@@ -4,7 +4,7 @@
 Una ''semplice'' calcolatrice realizzata in Javascript Vanilla e Tailwind in stile Mulan. 
 
 **Repository GitHub**
-https://github.com/Robbs17/theMulanProject
+https://github.com/Robbs17/calcolatrice
 
 # Struttura e funzionalità
 Il codice crea una calcolatrice funzionante che consente agli utenti di inserire numeri, eseguire operazioni aritmetiche di base e utilizzare alcune funzioni speciali. 
