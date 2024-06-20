@@ -6,6 +6,11 @@ Una ''semplice'' calcolatrice realizzata in Javascript Vanilla e Tailwind in sti
 **Repository GitHub**
 https://github.com/Robbs17/calcolatrice
 
+**NOTA sui DOCUMENTI**
+script.js è da dove siamo partiti. (NON HA FUNZIONALITA')
+calc.js è dove siamo arrivati.
+index.html è quello che ci siamo immaginati.
+
 # Struttura e funzionalità
 Il codice crea una calcolatrice funzionante che consente agli utenti di inserire numeri, eseguire operazioni aritmetiche di base e utilizzare alcune funzioni speciali. 
 Ogni azione dell'utente viene gestita tramite ascoltatori di eventi che aggiornano lo stato della calcolatrice e il display in tempo reale.
@@ -69,6 +74,7 @@ Ogni azione dell'utente viene gestita tramite ascoltatori di eventi che aggiorna
 1.  **Struttura della calcolatrice**:
     -   L'HTML fornisce la struttura visiva della calcolatrice, con un display per mostrare i numeri e un tastierino con pulsanti numerici e funzioni.
     -   I pulsanti sono organizzati in una griglia, con un pulsante speciale per ciascuna delle funzioni aritmetiche e numeriche.
+    -   Lo stile è stato implementato con Tailwind.
 
 
 ## Coding Rules
