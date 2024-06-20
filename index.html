@@ -1,45 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
   <title>Calcolatrice</title>
 </head>
-<body class="flex justify-center items-center  bg-[#faef95]">
+<!-- Bottone Play/Pause nascosto inizialmente -->
+<button id="playPause"
+  class="absolute top-0 left-2 mt-5 p-2 bg-blue-500 text-white rounded-full shadow-md button-shadow hover:bg-blue-600 active:button-active hidden">Play/Pause</button>
+
+<body class="flex justify-center items-center  bg-[#95ebfa]">
   <!-- Mushu -->
-  <div class="w-[450px] h-[600px]  bg-no-repeat" style="background-image: url('https://i.pinimg.com/originals/7d/48/95/7d48958c154e940c0e6aa7a4a57c630d.png'); "></div>
-  
+  <div class="w-[450px] h-[600px] bg-no-repeat" style="background-image: url('assets/img/mushu.png'); "></div>
+  <div id="musicButtonContainer" class="flex items-center">
+<!-- Bottone-COVER  "VAI CON LA MATEMATICA!""-->
+    <button id="matematica"
+      class="absolute w-[450px] h-[650px] text-3xl p-4 mt-6 font-extrabold bg-[#95ebfa] opacity-80 rounded-[20px] shadow-md button-shadow
+       hover:bg-blue-600 active:button-active">VAI <br>CON LA MATEMATICA!</button>
+  </div>
   <!-- Calcolatrice -->
-  <main class="border-[2px] border-black w-[400px] h-[600px] text-[48px] my-[50px] shadow-2xl rounded-3xl" >
-    
-    <!-- Display -->
-    <div id="display" class=" w-full h-[100px] p-2 font-bold flex justify-end items-end overflow-hidden bg-[#5163a3de] rounded-t-[20px]">
-    </div>
-  
-    <!-- Tastierino -->
-    <div id="tastierino" class="w-full h-[496px] p-2  grid grid-cols-4 grid-rows-5 text-[24px] font-bold bg-red-500 bg-gradient-to-br from-red-300 rounded-b-[20px]">
-      <button id="cancella" class="funzioni bg-[#f94a50] hover:bg-[#ff585d] auto rounded-full m-[5px] shadow-sm shadow-black">C</button>
-      <button id="cambioSegno" class="funzioni bg-[#f94a50] hover:bg-[#ff585d] auto rounded-full m-[5px] shadow-sm shadow-black ">+/-</button>
-      <button id="percentuale" class="funzioni bg-[#f94a50] hover:bg-[#ff585d] auto rounded-full m-[5px] shadow-sm shadow-black">%</button>
-      <button id="divisione" class="funzioni bg-[#f94a50] hover:bg-[#ff585d] auto rounded-full m-[5px] shadow-sm shadow-black">/</button>
-      <button class="numero bg-[#ffda36] hover:bg-[#ffe15a] auto rounded-full m-[5px] shadow-sm shadow-black">1</button>
-      <button class="numero bg-[#ffda36] hover:bg-[#ffe15a] auto rounded-full m-[5px] shadow-sm shadow-black">2</button>
-      <button class="numero bg-[#ffda36] hover:bg-[#ffe15a] auto rounded-full m-[5px] shadow-sm shadow-black">3</button>
-      <button id="moltiplicazione" class="funzioni bg-[#f94a50] hover:bg-[#ff585d] auto rounded-full m-[5px] shadow-sm shadow-black">X</button>
-      <button class="numero bg-[#ffda36] hover:bg-[#ffe15a] auto rounded-full m-[5px] shadow-sm shadow-black">4</button>
-      <button class="numero bg-[#ffda36] hover:bg-[#ffe15a] auto rounded-full m-[5px] shadow-sm shadow-black">5</button>
-      <button class="numero bg-[#ffda36] hover:bg-[#ffe15a] auto rounded-full m-[5px] shadow-sm shadow-black">6</button>
-      <button id="sottrazione" class="funzioni bg-[#f94a50] hover:bg-[#ff585d] auto rounded-full m-[5px] shadow-sm shadow-black">-</button>
-      <button class="numero bg-[#ffda36] hover:bg-[#ffe15a] auto rounded-full m-[5px] shadow-sm shadow-black">7</button>
-      <button class="numero bg-[#ffda36] hover:bg-[#ffe15a] auto rounded-full m-[5px] shadow-sm shadow-black">8</button>
-      <button class="numero bg-[#ffda36] hover:bg-[#ffe15a] auto rounded-full m-[5px] shadow-sm shadow-black">9</button>
-      <button id="addizione" class="funzioni bg-[#f94a50] hover:bg-[#ff585d] auto rounded-full m-[5px] shadow-sm shadow-black">+</button>
-      <button class="numero bg-[#ffda36] hover:bg-[#ffe15a] auto rounded-full m-[5px] shadow-sm shadow-black" value="0">0</button>
-      <button id="punto" class="bg-[#ffda36] hover:bg-[#ffe15a] auto rounded-full m-[5px] shadow-sm shadow-black">.</button>
-      <button id="uguale" class="funzioni bg-[#bc1b36] hover:bg-[#ff585d] col-span-2 rounded-full m-[5px] shadow-sm shadow-black">=</button>
+  <main class=" w-[450px] h-[600px] text-[48px] my-[50px] shadow-2xl rounded-3xl">
+
+    <!--Contenitore di tutta la calcolatrice-->
+    <div class="w-full shadow-2xl text-[24px] border-4 font-bold bg-red-500 bg-gradient-to-br from-red-300 rounded-[20px] p-4">
+      <!-- Display -->
+      <div id="display"
+        class="w-full h-[100px] p-4 font-bold text-6xl flex justify-end items-end overflow-hidden  bg-slate-200 bg-gradient-to-tl from-cyan-500 -300 rounded-[20px]">
+      </div>
+      <!-- Tastierino -->
+      <div id="tastierino" class="w-full h-[500px] p-6 grid grid-cols-4 grid-rows-5 text-[24px] font-bold">
+        <button id="cancella"
+          class="funzioni bg-[#f94449] hover:bg-[#ff555a] auto rounded-full m-[5px] shadow-sm shadow-black">C</button>
+        <button id="cambioSegno"
+          class="funzioni bg-[#f94449] hover:bg-[#ff555a] auto rounded-full m-[5px] shadow-sm shadow-black ">+/-</button>
+        <button id="percentuale"
+          class="funzioni bg-[#f94449] hover:bg-[#ff555a] auto rounded-full m-[5px] shadow-sm shadow-black">%</button>
+        <button id="divisione"
+          class="funzioni bg-[#f94449] hover:bg-[#ff555a] auto rounded-full m-[5px] shadow-sm shadow-black">/</button>
+        <button
+          class="numero bg-[#ffda36] hover:bg-[#ffe15a] auto rounded-full m-[5px] shadow-sm shadow-black">1</button>
+        <button
+          class="numero bg-[#ffda36] hover:bg-[#ffe15a] auto rounded-full m-[5px] shadow-sm shadow-black">2</button>
+        <button
+          class="numero bg-[#ffda36] hover:bg-[#ffe15a] auto rounded-full m-[5px] shadow-sm shadow-black">3</button>
+        <button id="moltiplicazione"
+          class="funzioni bg-[#ff2c2c] hover:bg-[#ff3f3f] auto rounded-full m-[5px] shadow-sm shadow-black">X</button>
+        <button
+          class="numero bg-[#ffda36] hover:bg-[#ffe15a] auto rounded-full m-[5px] shadow-sm shadow-black">4</button>
+        <button
+          class="numero bg-[#ffda36] hover:bg-[#ffe15a] auto rounded-full m-[5px] shadow-sm shadow-black">5</button>
+        <button
+          class="numero bg-[#ffda36] hover:bg-[#ffe15a] auto rounded-full m-[5px] shadow-sm shadow-black">6</button>
+        <button id="sottrazione"
+          class="funzioni bg-[#f01e2c] hover:bg-[#f32a38] auto rounded-full m-[5px] shadow-sm shadow-black">-</button>
+        <button
+          class="numero bg-[#ffda36] hover:bg-[#ffe15a] auto rounded-full m-[5px] shadow-sm shadow-black">7</button>
+        <button
+          class="numero bg-[#ffda36] hover:bg-[#ffe15a] auto rounded-full m-[5px] shadow-sm shadow-black">8</button>
+        <button
+          class="numero bg-[#ffda36] hover:bg-[#ffe15a] auto rounded-full m-[5px] shadow-sm shadow-black">9</button>
+        <button id="addizione"
+          class="funzioni bg-[#de0a26] hover:bg-[#de263e] auto rounded-full m-[5px] shadow-sm shadow-black">+</button>
+        <button class="numero bg-[#ffda36] hover:bg-[#ffe15a] auto rounded-full m-[5px] shadow-sm shadow-black"
+          value="0">0</button>
+        <button id="punto"
+          class="bg-[#ffda36] hover:bg-[#ffe15a] auto rounded-full m-[5px] shadow-sm shadow-black">.</button>
+        <button id="uguale"
+          class="funzioni bg-[#d1001f] hover:bg-[#d41f25] col-span-2 rounded-full m-[5px] shadow-sm shadow-black">=</button>
+      </div>
     </div>
   </main>
+
+  <!-- Elemento audio -->
+  <audio id="audio" src="assets/audio/faro-di-te-un-uomo.mp3"></audio>
+
   <script src="calc.js"></script>
 </body>
+
 </html>
