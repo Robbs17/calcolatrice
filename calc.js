@@ -16,7 +16,7 @@ document.getElementById("playPause").addEventListener("click", function () {
   }
 });
 
-// PUNTATORI
+// ELEMENTI HTML
 
 // Seleziona tutti gli elementi con classe "numero"
 const numeriPulsanti = document.querySelectorAll(".numero");
@@ -28,51 +28,40 @@ const pulsantePunto = document.getElementById("punto");
 const tastierinoElement = document.getElementById("tastierino");
 const displayElement = document.getElementById("display");
 
-// VARIABILI DI STATO
+// VARIABILI D'APPOGGIO
 
-// Inizializza un array per memorizzare i termini dell'operazione
-let arrayTermini = [];
-
-// Inizializza una stringa per memorizzare il termine attuale
-let termineAttuale = "0";
-
-// Inizializza una stringa per memorizzare l'operazione corrente
-let operazioneCorrente = "";
-
-// Inizializza una variabile per indicare se è stato inserito un numero decimale
-let isDecimale = false;
-
-// Inizializza una stringa per memorizzare il display temporaneo
-let displayTemporaneo = "";
+let arrayTermini = []; // array per memorizzare i termini dell'operazione
+let termineAttuale = "0"; // stringa per memorizzare il termine attuale
+let operazioneCorrente = ""; // stringa per memorizzare l'operazione (funzione/funzioneSpaciale) corrente
+let displayTemporaneo = ""; // stringa per memorizzare il display temporaneo
 
 // FUNZIONI
 
 // Funzione per aggiornare il display
-function aggiornaDisplay() {
-  displayTemporaneo = termineAttuale;
-  // Aggiorna il contenuto HTML del display con il valore displayTemporaneo
-  displayElement.innerHTML = displayTemporaneo;
+function aggiornaDisplay() { 
+  displayTemporaneo = termineAttuale; // Aggiorna il contenuto HTML del display con il valore displayTemporaneo
+  displayElement.innerHTML = displayTemporaneo; //Aggiorna sul DOM
 }
 
-// Funzione per controllare e procedere con le funzioni speciali
-function controllaFunzioniSpeciali(funzioneCalcolo) {
-  // Flag che si può procedere con un'operazione aritmetica (non speciale)
-  let procedeConOperazione = true;
+// Funzione che controlla se ho premuto il tasto di una funzione speciale e decide se procedere successivamente con le operazioni aritmetiche
+function controllaFunzioniSpeciali(funzioneCalcolo) { 
+  let funzioneSpaciale = false; 
+  // Flag che si può procedere con un'operazione aritmetica (non speciale) 
+  //verrà valutato dentro il'if che contiene la chiamata
 
   // Switch per determinare quale funzione speciale eseguire
   switch (funzioneCalcolo) {
     case "C":
       // Reset della calcolatrice
-      procedeConOperazione = false; // Impedisce di procedere con l'operazione aritmetica
+      funzioneSpaciale = true; // Impedisce di procedere con l'operazione aritmetica
       termineAttuale = "0"; // riassegna a termineAttuale uno valore "0"
       arrayTermini = []; // Svuota l'array dei termini
-      isDecimale = false; // Resetta il flag del decimale
       aggiornaDisplay(); // Aggiorna il display per riflettere il reset
       break;
 
     case "+/-":
       // Cambio del segno del termineAttuale
-      procedeConOperazione = false; // Impedisce di procedere con l'operazione aritmetica
+      funzioneSpaciale = true; // Impedisce di procedere con l'operazione aritmetica
       if (termineAttuale !== "") {
         // Controlla se c'è un termine nel termineAttuale
         termineAttuale = -termineAttuale; // Cambia il segno del termine
@@ -82,7 +71,7 @@ function controllaFunzioniSpeciali(funzioneCalcolo) {
 
     case "%":
       // Conversione del termine attuale in percentuale
-      procedeConOperazione = false; // Impedisce di procedere con l'operazione aritmetica
+      funzioneSpaciale = true; // Impedisce di procedere con l'operazione aritmetica
       if (termineAttuale !== "") {
         // Controlla se c'è un termine nel termineAttuale
         termineAttuale = termineAttuale / 100; // Converte il termine in percentuale
@@ -91,9 +80,9 @@ function controllaFunzioniSpeciali(funzioneCalcolo) {
       break;
   }
 
-  // Ritorna true se non è stata eseguita una funzione speciale (si può procedere con l'operazione aritmetica)
+  // Ritorna true se non è stata eseguita una funzione speciale (e si può procedere con le operazioni non speciali)
   // Ritorna false se è stata eseguita una funzione speciale
-  return procedeConOperazione;
+  return funzioneSpaciale;
 }
 
 // Funzione per eseguire le operazioni matematiche
@@ -109,22 +98,15 @@ function eseguiOperazione() {
       termineAttuale = arrayTermini[0] * arrayTermini[1];
       break;
     case "/":
-      termineAttuale =
-        arrayTermini[1] !== 0
-          ? (arrayTermini[0] / arrayTermini[1]).toFixed(10)
-          : "Impossibile dividere per 0, ignorante!";
-      // Gestisce la divisione per zero
+      termineAttuale = arrayTermini[1] !== 0 ?  //Se il secondo termine è diverso da 0 
+       (arrayTermini[0] / arrayTermini[1]).toFixed(10) : //faccio la divisione (toFixed dopo . max 10 cifre)
+        "Impossibile dividere per 0, ignorante!";
+     
       break;
   }
-
-  // Reset dei termini e memorizzazione del risultato
-  arrayTermini = [termineAttuale];
-  // Aggiorna il display
-  aggiornaDisplay();
-  // Pulisce il buffer
-  termineAttuale = "";
-  // Resetta l'indicatore decimale
-  isDecimale = false;
+    arrayTermini = [termineAttuale];// Reset dei termini e memorizzazione del risultato
+    aggiornaDisplay(); // Aggiorna il display
+    termineAttuale = ""; // Pulisce il termineAttuale
 }
 
 // GESTORI DI EVENTI
@@ -132,26 +114,21 @@ function eseguiOperazione() {
 // Aggiunge un event listener per ogni pulsante numerico
 numeriPulsanti.forEach((pulsante) => {
   pulsante.addEventListener("click", () => {
-    // Guard clause: evita l'aggiunta di più zeri all'inizio del numero
-    if (!isDecimale && termineAttuale.charAt(0) === "0") {
+    if (!termineAttuale.includes(".") && termineAttuale.charAt(0) === "0") { // Evita l'aggiunta di più zeri all'inizio del numero
       termineAttuale = pulsante.innerText;
     } else {
-      // Aggiunge il testo del pulsante al termineAttuale
-      termineAttuale += pulsante.innerText;
+      termineAttuale += pulsante.innerText; // Aggiunge il valore del pulsante al termineAttuale(ho già un numero)
     }
 
-    // Aggiorna il display
-    aggiornaDisplay();
+    aggiornaDisplay(); // Aggiorna HTML
   });
 });
 
 // Aggiunge un event listener per il pulsante del punto decimale
 pulsantePunto.addEventListener("click", () => {
-  // Aggiunge un punto solo se non esiste già e il termineAttuale non è vuoto
-  if (!isDecimale && termineAttuale.length !== 0) {
-    isDecimale = true;
+  if (!termineAttuale.includes(".") && termineAttuale.length !== 0) { // Aggiunge un punto solo se non esiste già e il termineAttuale non è vuoto
     termineAttuale += ".";
-    aggiornaDisplay();
+    aggiornaDisplay(); //E aggiorno L'HTML
   }
 });
 
@@ -161,19 +138,23 @@ funzioniPulsanti.forEach((pulsanteFunzione) => {
     // Se l'operazione speciale non mi da l'ok a procedere con
     // le funzioni aritmetiche (!C, +/-, %)
 
-    // Guard clause con flag, se la condizione è rispettata esce dalla funzione
-    if (!controllaFunzioniSpeciali(pulsanteFunzione.innerText)) return;
+    // Guard clause, se la condizione è rispettata esce dalla funzione
+    // se controllaFunzioniSpeciali torna false, mi fermo.
+    if (controllaFunzioniSpeciali(pulsanteFunzione.innerText) == true) return;
 
     // Memorizza l'operazione corrente da eseguire se non è uguale con operatore ternario
     operazioneCorrente = pulsanteFunzione.innerText !== "=" ? pulsanteFunzione.innerText : operazioneCorrente;
 
-    // Se il buffer non è vuoto, aggiunge il termine all'array dei termini
+    // Se il termineAttuale non è vuoto, aggiunge il termine all'array dei termini
+    //Puoi salvere un termine solo se l'array è vuoto altrimenti NaN
     if (termineAttuale !== "") arrayTermini.push(parseFloat(termineAttuale));
 
-    // Pulisce il buffer
+    // Pulisce il termineAttuale
+    //Li ho salvati nell'array, ora pulisco display temponareo
     termineAttuale = "";
 
     // Se ci sono almeno due termini, esegue l'operazione
+
     if (arrayTermini.length > 1) {
       eseguiOperazione();
     }
