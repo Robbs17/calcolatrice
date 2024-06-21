@@ -18,7 +18,7 @@ Il codice crea una calcolatrice funzionante che consente agli utenti di inserire
     -   Seleziona anche tutti i pulsanti delle funzioni, identificati dalla classe "funzioni".
     -   Seleziona specifici elementi del DOM come il pulsante del punto decimale, il tastierino e il display.
 
-### VARIABILI DI STATO
+### VARIABILI D'APPOGGIO
 
 1.  **Array dei termini**:
     -   Un array vuoto memorizza i numeri inseriti dall'utente durante le operazioni.
@@ -26,9 +26,7 @@ Il codice crea una calcolatrice funzionante che consente agli utenti di inserire
     -   Una stringa vuota memorizza il numero che l'utente sta attualmente digitando.
 3.  **Operazione corrente**:
     -   Una stringa vuota memorizza l'operazione aritmetica selezionata dall'utente (ad esempio, addizione, sottrazione).
-4.  **Indicatore decimale**:
-    -   Una variabile booleana indica se il numero attuale è decimale (cioè, contiene un punto decimale).
-5.  **Display temporaneo**:
+4. **Display temporaneo**:
     -   Una stringa memorizza temporaneamente il valore da visualizzare sul display della calcolatrice.
 
 ### FUNZIONI
@@ -75,6 +73,7 @@ Il codice crea una calcolatrice funzionante che consente agli utenti di inserire
     -   Riorganizzare il codice JavaScript per migliorarne la leggibilità.
     -   Separare la logica delle operazioni dalle manipolazioni del DOM.
     -   Implementare un sistema di moduli per separare le funzioni in file distinti (se non già fatto).
+    -   Bugs eventuali
 2.  **Gestione Numeri Termini**:
     -  Quando vengono selezionati molto termini graficamente non sono 
     - visibili, anche se funzionalmente sì. Gestire la grafica.
